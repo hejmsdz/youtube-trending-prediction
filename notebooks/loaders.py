@@ -31,6 +31,7 @@ def load_and_clean_up_videos():
     vids = cleanup.merge(load_gb_videos(), load_us_videos())
     vids = cleanup.fill_missing_video_ids(vids)
     vids = cleanup.remove_duplicates(vids)
+    vids = cleanup.trim_column_names(vids)
     return vids
 
 def load_all_videos():

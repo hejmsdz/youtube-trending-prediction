@@ -30,3 +30,6 @@ def remove_duplicates(vids):
     vids.drop_duplicates(scope, inplace=True)
     vids.drop(columns=['duplicate'], inplace=True)
     return vids
+
+def trim_column_names(vids):
+    return vids.rename(columns={'description ': 'description'})

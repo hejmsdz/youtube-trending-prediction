@@ -2,6 +2,8 @@ import json
 import os.path
 import pandas as pd
 
+import cleanup
+
 data_dir = '../youtube_data'
 
 def load_csv(filename):
@@ -24,3 +26,18 @@ def load_gb_videos():
 
 def load_us_videos():
     return load_csv('US_videos_5p.csv')
+
+def load_and_clean_up_videos():
+    vids = cleanup.merge(load_gb_videos(), load_us_videos())
+    vids = cleanup.fill_missing_video_ids(vids)
+    vids = cleanup.remove_duplicates(vids)
+    return vids
+
+def load_all_videos():
+    path = os.path.join(data_dir, 'all_videos.csv')
+    if os.path.exists(path):
+        return pd.read_csv(path)
+    
+    vids = load_and_clean_up_videos()
+    vids.to_csv(path)
+    return vids

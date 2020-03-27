@@ -1,6 +1,9 @@
 import json
 import os.path
 import pandas as pd
+import urllib.request
+from pathlib import Path
+from urllib.error import HTTPError
 
 import cleanup
 
@@ -42,3 +45,19 @@ def load_all_videos():
     vids = load_and_clean_up_videos()
     vids.to_csv(path)
     return vids
+
+def load_thumbnails():
+    path = os.path.join(data_dir, 'thumbnails')
+    Path(path).mkdir(parents=True, exist_ok=True)
+
+    vids = load_and_clean_up_videos()
+
+    for _, row in vids.iterrows():
+        try:
+            thumbnail_path = os.path.join(path, row.video_id + ".jpg")
+            if not os.path.exists(thumbnail_path):
+                urllib.request.urlretrieve(row.thumbnail_link, thumbnail_path)
+
+        except HTTPError:
+            print('Thumbnail not found for videoId: ' + str(row.video_id))
+            continue

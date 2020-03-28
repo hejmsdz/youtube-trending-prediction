@@ -4,7 +4,6 @@ import pandas as pd
 import requests
 import tqdm
 from pathlib import Path
-from urllib.error import HTTPError
 
 import cleanup
 

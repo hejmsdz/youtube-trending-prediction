@@ -68,21 +68,31 @@ def load_thumbnails(vids):
     Path(path).mkdir(parents=True, exist_ok=True)
 
     unique_vids = vids.groupby('video_id').first()
-    num_images = 0
+    num_downloaded = 0
+    num_present = 0
+    num_skipped = 0
+    num_broken = 0
     broken_ids = load_broken_ids()
     session = requests.Session()
     for video_id, row in tqdm.tqdm(unique_vids.iterrows(), total=len(unique_vids)):
             if video_id in broken_ids:
+                num_skipped += 1
                 continue
             thumbnail_path = os.path.join(path, video_id + ".jpg")
             if os.path.exists(thumbnail_path):
+                num_present += 1
                 continue
             response = session.get(row.thumbnail_link)
             if response.status_code == 404:
                 broken_ids.add(video_id)
+                num_broken += 1
                 continue
             with open(thumbnail_path, 'wb') as target:
                 target.write(response.content)
-            num_images += 1
-    save_broken_ids(broken_ids)
-    return num_images
+            num_downloaded += 1
+    if num_broken:
+        save_broken_ids(broken_ids)
+    print('Downloaded:', num_downloaded)
+    print('Broken links:', num_broken)
+    print('Already present:', num_present)
+    print('Skipped:', num_skipped)

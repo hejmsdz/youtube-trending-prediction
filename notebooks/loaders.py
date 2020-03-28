@@ -1,5 +1,8 @@
+import glob
+import itertools
 import json
 import os.path
+import cv2
 import pandas as pd
 import requests
 import tqdm
@@ -96,3 +99,11 @@ def load_thumbnails(vids):
     print('Broken links:', num_broken)
     print('Already present:', num_present)
     print('Skipped:', num_skipped)
+
+def each_thumbnail(limit=None):
+    path = os.path.join(data_dir, 'thumbnails', '*')
+    images = glob.iglob(path)
+    if limit:
+        images = itertools.islice(images, limit)
+    for filename in images:
+        yield cv2.imread(filename)

@@ -2,6 +2,7 @@ import json
 import os.path
 import pandas as pd
 import urllib.request
+import tqdm
 from pathlib import Path
 from urllib.error import HTTPError
 
@@ -51,13 +52,14 @@ def load_thumbnails():
     Path(path).mkdir(parents=True, exist_ok=True)
 
     vids = load_and_clean_up_videos()
-
-    for _, row in vids.iterrows():
+    broken_links = []
+    for _, row in tqdm.tqdm(vids.iterrows(), total=len(vids)):
         try:
             thumbnail_path = os.path.join(path, row.video_id + ".jpg")
             if not os.path.exists(thumbnail_path):
                 urllib.request.urlretrieve(row.thumbnail_link, thumbnail_path)
 
         except HTTPError:
-            print('Thumbnail not found for videoId: ' + str(row.video_id))
+            broken_links.append(row.thumbnail_link)
             continue
+    return broken_links

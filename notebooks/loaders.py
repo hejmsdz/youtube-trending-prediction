@@ -52,16 +52,16 @@ def load_thumbnails(vids):
     Path(path).mkdir(parents=True, exist_ok=True)
 
     unique_vids = vids.groupby('video_id').first()
-    broken_links = []
+    num_images = 0
     session = requests.Session()
     for video_id, row in tqdm.tqdm(unique_vids.iterrows(), total=len(unique_vids)):
-        try:
             thumbnail_path = os.path.join(path, video_id + ".jpg")
-            if not os.path.exists(thumbnail_path):
-                response = session.get(row.thumbnail_link)
-                with open(thumbnail_path, 'wb') as target:
-                    target.write(response.content)
-        except HTTPError:
-            broken_links.append(row.thumbnail_link)
-            continue
-    return broken_links
+            if os.path.exists(thumbnail_path):
+                continue
+            response = session.get(row.thumbnail_link)
+            if response.status_code == 404:
+                continue
+            with open(thumbnail_path, 'wb') as target:
+                target.write(response.content)
+            num_images += 1
+    return num_images

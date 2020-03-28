@@ -47,15 +47,15 @@ def load_all_videos():
     vids.to_csv(path)
     return vids
 
-def load_thumbnails():
+def load_thumbnails(vids):
     path = os.path.join(data_dir, 'thumbnails')
     Path(path).mkdir(parents=True, exist_ok=True)
 
-    vids = load_and_clean_up_videos()
+    unique_vids = vids.groupby('video_id').first()
     broken_links = []
-    for _, row in tqdm.tqdm(vids.iterrows(), total=len(vids)):
+    for video_id, row in tqdm.tqdm(unique_vids.iterrows(), total=len(unique_vids)):
         try:
-            thumbnail_path = os.path.join(path, row.video_id + ".jpg")
+            thumbnail_path = os.path.join(path, video_id + ".jpg")
             if not os.path.exists(thumbnail_path):
                 urllib.request.urlretrieve(row.thumbnail_link, thumbnail_path)
 

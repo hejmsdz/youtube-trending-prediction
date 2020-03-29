@@ -107,5 +107,21 @@ def each_thumbnail(limit=None):
     if limit:
         images = itertools.islice(images, limit)
     for filename in images:
+        video_id = os.path.basename(filename)[:-4]
         im = cv2.imread(filename)
-        yield im[margin:-margin, :]
+        yield video_id, im[margin:-margin, :]
+
+def load_thumbnail_from_file(filename):
+    margin = 11
+    im = cv2.imread(filename)
+    return im[margin:-margin, :]
+
+def load_thumbnail(video_id):
+    filename = os.path.join(data_dir, 'thumbnails', f"{video_id}.jpg")
+    return load_thumbnail_from_file(filename)
+
+def create_thumbs_df():
+    path = os.path.join(data_dir, 'thumbnails', '*')
+    images = glob.iglob(path)
+    ids = [os.path.basename(filename)[:-4] for filename in images]
+    return pd.DataFrame(data={ 'video_id': ids })

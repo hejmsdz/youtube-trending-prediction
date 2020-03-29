@@ -12,6 +12,11 @@ then
   unzip youtube_data.zip
 fi
 
+if [[ ! -f "youtube_data/haarcascade_frontalface_default.xml" ]]
+then
+  wget -P youtube_data https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml
+fi
+
 if [ ! -d ".venv" ]
 then
   python3 -m venv .venv

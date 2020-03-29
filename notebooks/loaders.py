@@ -103,7 +103,9 @@ def load_thumbnails(vids):
 def each_thumbnail(limit=None):
     path = os.path.join(data_dir, 'thumbnails', '*')
     images = glob.iglob(path)
+    margin = 11
     if limit:
         images = itertools.islice(images, limit)
     for filename in images:
-        yield cv2.imread(filename)
+        im = cv2.imread(filename)
+        yield im[margin:-margin, :]

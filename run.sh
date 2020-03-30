@@ -22,6 +22,11 @@ then
   wget -P youtube_data https://raw.githubusercontent.com/ZER-0-NE/EAST-Detector-for-text-detection-using-OpenCV/master/frozen_east_text_detection.pb
 fi
 
+if [[ ! -f "youtube_data/model_v6_23.hdf5" ]]
+then
+  wget -P youtube_data https://raw.githubusercontent.com/priya-dwivedi/face_and_emotion_detection/master/emotion_detector_models/model_v6_23.hdf5
+fi
+
 if [ ! -d ".venv" ]
 then
   python3 -m venv .venv

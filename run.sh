@@ -17,6 +17,11 @@ then
   wget -P youtube_data https://raw.githubusercontent.com/opencv/opencv/master/data/haarcascades/haarcascade_frontalface_default.xml
 fi
 
+if [[ ! -f "youtube_data/frozen_east_text_detection.pb" ]]
+then
+  wget -P youtube_data https://raw.githubusercontent.com/ZER-0-NE/EAST-Detector-for-text-detection-using-OpenCV/master/frozen_east_text_detection.pb
+fi
+
 if [ ! -d ".venv" ]
 then
   python3 -m venv .venv

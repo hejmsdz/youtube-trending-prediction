@@ -64,5 +64,5 @@ def boxes_area(image, boxes):
     w, h, _ = image.shape
     bitmap = np.zeros((w, h), dtype=bool)
     for (startX, startY, endX, endY) in boxes:
-        bitmap[startX:endX, startY:endY] = True
+        bitmap[startY:endY, startX:endX] = True
     return bitmap.mean()

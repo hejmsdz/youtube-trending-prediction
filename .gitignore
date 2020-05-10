@@ -3,6 +3,7 @@
 .idea
 .ipynb_checkpoints
 .DS_Store
+.env
 
 youtube_data
 youtube_data.zip

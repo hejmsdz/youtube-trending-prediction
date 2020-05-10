@@ -34,6 +34,13 @@ fi
 
 . .venv/bin/activate
 
+if [ -f ".env" ]
+then
+  set -o allexport
+  . ./.env
+  set +o allexport
+fi
+
 missing_requirements=$(pip freeze --local | diff requirements.txt - | grep '^<' | wc -l)
 if [ $missing_requirements -gt 0 ]
 then

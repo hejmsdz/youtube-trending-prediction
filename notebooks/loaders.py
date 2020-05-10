@@ -52,7 +52,7 @@ def load_all_videos():
 def load_features():
     path = os.path.join(data_dir, 'features.csv')
     features = pd.read_csv(path)
-    features = features.drop(columns=['Unnamed: 0', 'Unnamed: 0.1', 'Unnamed: 0.1.1'])
+    features = features.drop(columns=['Unnamed: 0'])
     features = features.astype({ 'category_id': 'category' })
     return features
 

@@ -49,6 +49,13 @@ def load_all_videos():
     vids.to_csv(path)
     return vids
 
+def load_features():
+    path = os.path.join(data_dir, 'features.csv')
+    features = pd.read_csv(path)
+    features = features.drop(columns=['Unnamed: 0'])
+    features = features.astype({ 'category_id': 'category' })
+    return features
+
 def load_broken_ids():
     path = os.path.join(data_dir, 'broken_ids.txt')
     broken_ids = set()

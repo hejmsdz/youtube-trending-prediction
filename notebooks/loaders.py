@@ -143,6 +143,12 @@ def load_selected_attributes():
     features.describe()
     return features[columns]
 
+def load_semi_supervised():
+    path = os.path.join(data_dir, 'semi_supervised.csv')
+    features = pd.read_csv(path)
+    features = features.drop(columns=['Unnamed: 0'])
+    return features
+
 def load_broken_ids():
     path = os.path.join(data_dir, 'broken_ids.txt')
     broken_ids = set()

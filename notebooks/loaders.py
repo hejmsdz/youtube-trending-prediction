@@ -49,6 +49,11 @@ def load_all_videos():
     vids.to_csv(path)
     return vids
 
+def load_raw_non_trending():
+    path = os.path.join(data_dir, 'non_trending.csv')
+    vids = pd.read_csv(path, header=0)
+    return vids
+
 def load_features():
     path = os.path.join(data_dir, 'features.csv')
     features = pd.read_csv(path)

@@ -61,6 +61,13 @@ def load_features():
     features = features.astype({ 'category_id': 'category' })
     return features
 
+def load_non_trending_features():
+    path = os.path.join(data_dir, 'features_non-trending.csv')
+    features = pd.read_csv(path)
+    features = features.drop(columns=['Unnamed: 0'])
+    features = features.astype({ 'category_id': 'category' })
+    return features
+
 def load_selected_attributes():
     columns = ['category_id', 'description__ant', 'description__avail',
                'description__deal',

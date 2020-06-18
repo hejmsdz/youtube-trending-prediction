@@ -1,5 +1,6 @@
 colorgram.py==1.2.0
 google-api-python-client==1.8.2
+graphviz==0.14
 imutils==0.5.3
 jupyter==1.0.0
 matplotlib==3.2.1

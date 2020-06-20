@@ -14,7 +14,7 @@ data_dir = '../youtube_data'
 
 def load_csv(filename):
     path = os.path.join(data_dir, filename)
-    return pd.read_csv(path, sep=';', encoding='macroman', dtype={'category_id': 'category'})
+    return pd.read_csv(path, sep=';', encoding='iso-8859-1', dtype={'category_id': 'category'})
 
 def load_categories():
     gb_path = os.path.join(data_dir, 'GB_category_id.json')

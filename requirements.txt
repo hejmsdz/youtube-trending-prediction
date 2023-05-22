@@ -7,7 +7,7 @@ matplotlib==3.2.1
 nltk==3.4.5
 opencv-python==4.2.0.32
 pandas==1.0.1
-requests==2.23.0
+requests==2.31.0
 scikit-learn==0.22.2
 seaborn==0.10.0
 tqdm==4.43.0
